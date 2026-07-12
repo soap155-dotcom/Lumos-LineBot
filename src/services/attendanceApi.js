@@ -1,13 +1,22 @@
-/**
- * 勤怠システムへ送信
- *
- * 今後Apps Script Web APIを呼び出す
- */
+const config = require("../config/config");
+
+console.log(config);
+
 async function sendAttendance(data) {
 
-  console.log("送信予定");
+  console.log("★★ sendAttendanceに入りました ★★");
 
-  console.log(JSON.stringify(data, null, 2));
+  if (!config.attendanceApiUrl) {
+
+    console.log("ATTENDANCE_API_URL 未設定");
+
+    console.log(JSON.stringify(data, null, 2));
+
+    return;
+
+  }
+
+  console.log("送信先：" + config.attendanceApiUrl);
 
 }
 

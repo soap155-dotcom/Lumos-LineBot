@@ -14,18 +14,18 @@ const {
   sendAttendance
 } = require("./attendanceApi");
 
-function handleWebhook(body) {
+async function handleWebhook(body) {
 
   const events = parseEvents(body);
 
   console.log("イベント数：" + events.length);
 
-  events.forEach(function(event) {
+  for (const event of events) {
 
     const message = parseMessage(event);
 
     if (!message) {
-      return;
+      continue;
     }
 
     const employees = resolveEmployees(message.text);
@@ -36,7 +36,17 @@ function handleWebhook(body) {
     console.log("===== MESSAGE =====");
     console.log(message);
 
-  });
+    console.log("① sendAttendanceを呼びます");
+
+    await sendAttendance({
+      message,
+      employees
+    });
+
+    console.log("② sendAttendanceが終わりました");
+
+  }
+
 
 }
 

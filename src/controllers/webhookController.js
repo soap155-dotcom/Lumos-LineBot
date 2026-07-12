@@ -1,10 +1,10 @@
-const {
-  handleWebhook
-} = require("../services/lineService");
+const lineService = require("../services/lineService");
 
-function receiveWebhook(req, res) {
+console.log("lineService =", lineService);
 
-  handleWebhook(req.body);
+async function receiveWebhook(req, res) {
+
+  await lineService.handleWebhook(req.body);
 
   res.sendStatus(200);
 
