@@ -4,18 +4,30 @@ const {
 
 /**
  * メッセージから社員を特定
- *
- * @param {String} text
- * @returns {Array}
  */
 function resolveEmployees(text) {
 
   const employees = getEmployees();
 
-  // まだ判定はしない
-  console.log("社員マスタ件数：" + employees.length);
+  const result = [];
 
-  return [];
+  employees.forEach(employee => {
+
+    const hit = employee.aliases.some(alias => {
+
+      return text.includes(alias);
+
+    });
+
+    if (hit) {
+
+      result.push(employee.name);
+
+    }
+
+  });
+
+  return result;
 
 }
 
