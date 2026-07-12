@@ -1,5 +1,29 @@
 {
   "name": "lumos-line-bot",
-  "version": "1.0.0",
-  "private": true
+  "version": "0.1.0",
+  "description": "LINEグループの出退勤報告を受信し、Lumos勤怠管理システムへ反映するBot",
+  "private": true,
+
+  "main": "src/app.js",
+
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soap155-dotcom/Lumos-LineBot.git"
+  },
+
+  "author": "soap155",
+  "license": "MIT",
+
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }
