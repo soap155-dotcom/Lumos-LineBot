@@ -1,8 +1,10 @@
+const {
+  handleWebhook
+} = require("../services/lineService");
+
 function receiveWebhook(req, res) {
 
-  console.log("========== WEBHOOK ==========");
-  console.log(req.body);
-  console.log("=============================");
+  handleWebhook(req.body);
 
   res.sendStatus(200);
 
