@@ -1,7 +1,19 @@
+const {
+  parseEvents
+} = require("../parsers/eventParser");
+
 function handleWebhook(body) {
 
-  console.log("===== LINE EVENT =====");
-  console.log(JSON.stringify(body, null, 2));
+  const events = parseEvents(body);
+
+  console.log("イベント数：" + events.length);
+
+  events.forEach(function(event, index) {
+
+    console.log("----- Event " + (index + 1) + " -----");
+    console.log(JSON.stringify(event, null, 2));
+
+  });
 
 }
 
