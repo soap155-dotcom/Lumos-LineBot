@@ -1,4 +1,5 @@
 const express = require("express");
+const webhookRoute = require("./routes/webhook");
 
 const app = express();
 
@@ -13,16 +14,9 @@ app.get("/", (req, res) => {
 });
 
 // Webhook
-app.post("/webhook", (req, res) => {
+app.use("/webhook", webhookRoute);
 
-  console.log("========== WEBHOOK ==========");
-  console.log(req.body);
-  console.log("=============================");
-
-  res.sendStatus(200);
-
-});
-
+// サーバー起動
 app.listen(PORT, () => {
   console.log(`Server started : ${PORT}`);
 });
