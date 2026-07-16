@@ -13,17 +13,18 @@ function resolveEmployees(text) {
 
   employees.forEach(employee => {
 
-    const hit = employee.aliases.some(alias => {
+    const hit = employee.aliases.some(alias =>
+      text.includes(alias)
+    );
 
-      return text.includes(alias);
+    if (!hit) return;
 
-    });
-
-    if (hit) {
-
-      result.push(employee.name);
-
+    // 重複防止
+    if (result.some(e => e.name === employee.name)) {
+      return;
     }
+
+    result.push(employee);
 
   });
 
