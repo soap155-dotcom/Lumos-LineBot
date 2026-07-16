@@ -6,13 +6,15 @@ const {
   parseMessage
 } = require("../parsers/messageParser");
 
-const {
-  resolveEmployees
-} = require("./employeeResolver");
+
 
 const {
   sendAttendance
 } = require("./attendanceApi");
+
+const {
+  process
+} = require("./messageProcessor");
 
 async function handleWebhook(body) {
 
@@ -28,22 +30,21 @@ async function handleWebhook(body) {
       continue;
     }
 
-    const employees = resolveEmployees(message.text);
-
-    console.log("社員一覧");
-    console.log(employees);
-
-    console.log("===== MESSAGE =====");
-    console.log(message);
-
-    console.log("① sendAttendanceを呼びます");
-
-    await sendAttendance({
-      message,
-      employees
-    });
-
-    console.log("② sendAttendanceが終わりました");
+    const records = process(message);
+    
+    console.log("===== RECORDS =====");
+    console.log(JSON.stringify(records, null, 2));
+    
+    for (const record of records) {
+      
+      console.log("① sendAttendanceを呼びます");
+      
+      await sendAttendance(record);
+      
+      console.log("② sendAttendanceが終わりました");
+    
+    }
+   
 
   }
 
