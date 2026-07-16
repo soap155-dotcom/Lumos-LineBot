@@ -1,22 +1,35 @@
 const config = require("../config/config");
 
-console.log(config);
-
 async function sendAttendance(data) {
 
   console.log("★★ sendAttendanceに入りました ★★");
 
-  if (!config.attendanceApiUrl) {
+  try {
 
-    console.log("ATTENDANCE_API_URL 未設定");
+    const response = await fetch(config.attendanceApiUrl, {
 
-    console.log(JSON.stringify(data, null, 2));
+      method: "POST",
 
-    return;
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify(data)
+
+    });
+
+    console.log("HTTPステータス：" + response.status);
+
+    const text = await response.text();
+
+    console.log(text);
+
+  } catch (e) {
+
+    console.error("送信エラー");
+    console.error(e);
 
   }
-
-  console.log("送信先：" + config.attendanceApiUrl);
 
 }
 
