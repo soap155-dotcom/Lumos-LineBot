@@ -1,4 +1,4 @@
-const { getSites } = require("./masterService");
+const siteRepository = require("../repositories/siteRepository");
 
 /**
  * メッセージから現場判定
@@ -6,26 +6,30 @@ const { getSites } = require("./masterService");
  * @param {string} text
  * @returns {Object|null}
  */
-function resolveSite(text) {
+async function resolveSite(text) {
 
-    const sites = getSites();
+  const sites =
+  await siteRepository.getSites();
 
-    for (const site of sites) {
+console.log("現場マスタ");
+console.log(JSON.stringify(sites, null, 2));
 
-        const hit = site.aliases.some(alias =>
-            text.includes(alias)
-        );
+  for (const site of sites) {
 
-        if (hit) {
-            return site;
-        }
+    const hit = site.aliases.some(alias =>
+      text.includes(alias)
+    );
 
+    if (hit) {
+      return site;
     }
 
-    return null;
+  }
+
+  return null;
 
 }
 
 module.exports = {
-    resolveSite
+  resolveSite
 };

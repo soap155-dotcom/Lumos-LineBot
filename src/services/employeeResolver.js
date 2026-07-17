@@ -1,14 +1,15 @@
-const {
-  getEmployees
-} = require("./masterService");
+const employeeRepository = require("../repositories/employeeRepository");
 
 /**
  * メッセージから社員を特定
  */
-function resolveEmployees(text) {
+async function resolveEmployees(text) {
 
-  const employees = getEmployees();
+ const employees =
+  await employeeRepository.getEmployees();
 
+console.log("社員マスタ");
+console.log(JSON.stringify(employees, null, 2));
   const result = [];
 
   employees.forEach(employee => {
@@ -20,7 +21,7 @@ function resolveEmployees(text) {
     if (!hit) return;
 
     // 重複防止
-    if (result.some(e => e.name === employee.name)) {
+    if (result.some(e => e["社員ID"] === employee["社員ID"])) {
       return;
     }
 

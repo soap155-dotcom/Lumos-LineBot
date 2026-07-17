@@ -4,12 +4,22 @@ console.log("lineService =", lineService);
 
 async function receiveWebhook(req, res) {
 
-  console.log("===== WEBHOOK受信 =====");
-  console.log(JSON.stringify(req.body, null, 2));
+  try {
 
-  await lineService.handleWebhook(req.body);
+    console.log("===== WEBHOOK受信 =====");
+    console.log(JSON.stringify(req.body, null, 2));
 
-  res.sendStatus(200);
+    await lineService.handleWebhook(req.body);
+
+    res.sendStatus(200);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.sendStatus(500);
+
+  }
 
 }
 

@@ -6,8 +6,6 @@ const {
   parseMessage
 } = require("../parsers/messageParser");
 
-
-
 const {
   sendAttendance
 } = require("./attendanceApi");
@@ -30,24 +28,23 @@ async function handleWebhook(body) {
       continue;
     }
 
-    const records = process(message);
-    
+    // ★ awaitを追加
+    const records = await process(message);
+
     console.log("===== RECORDS =====");
     console.log(JSON.stringify(records, null, 2));
-    
+
     for (const record of records) {
-      
+
       console.log("① sendAttendanceを呼びます");
-      
+
       await sendAttendance(record);
-      
+
       console.log("② sendAttendanceが終わりました");
-    
+
     }
-   
 
   }
-
 
 }
 

@@ -10,17 +10,17 @@ const { buildAttendance } = require("./attendanceBuilder");
  * @param {Object} message
  * @returns {Array}
  */
-function process(message) {
+async function process(message) {
 
     const reports = resolveReports(message.text);
 
     const records = [];
 
-    reports.forEach(report => {
+    for (const report of reports) {
 
-        const employees = resolveEmployees(report.text);
+        const employees = await resolveEmployees(report.text);
         const event = resolveEvent(report.text);
-        const site = resolveSite(report.text);
+        const site = await resolveSite(report.text);
 
         const attendanceRecords = buildAttendance({
 
@@ -32,7 +32,7 @@ function process(message) {
 
         records.push(...attendanceRecords);
 
-    });
+    }
 
     return records;
 
@@ -41,3 +41,47 @@ function process(message) {
 module.exports = {
     process
 };
+async function process(message) {
+
+    const reports = resolveReports(message.text);
+
+    console.log("reports:");
+    console.log(reports);
+
+    const records = [];
+
+    for (const report of reports) {
+
+        const employees = await resolveEmployees(report.text);
+
+        console.log("employees:");
+        console.log(employees);
+
+        const event = resolveEvent(report.text);
+
+        console.log("event:");
+        console.log(event);
+
+        const site = await resolveSite(report.text);
+
+        console.log("site:");
+        console.log(site);
+
+        const attendanceRecords = buildAttendance({
+
+            employees,
+            event,
+            site
+
+        }, message.timestamp);
+
+        console.log("attendanceRecords:");
+        console.log(attendanceRecords);
+
+        records.push(...attendanceRecords);
+
+    }
+
+    return records;
+
+}
